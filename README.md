@@ -1,1 +1,1 @@
-# Qwen3-0.B-Infer
+# Qwen3-0.6B-Infer
