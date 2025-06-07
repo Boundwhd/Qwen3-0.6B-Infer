@@ -26,7 +26,7 @@ def main():
     
     print(f"💡 Deep thinking mode: {'Enabled' if args.deep_think else 'Disabled'}")
     print("🔁 Enter your prompts below. Type 'exit' to quit.")
-
+    
     while True:
         try:
             prompt = input("\nUser: ")
