@@ -64,7 +64,10 @@ Assistant: Hello! How can I assist you today?
 
 User: Tell me something about a large language model
 
-Assistant: A large language model (LLM) is a type of artificial intelligence model that can understand and generate human language. These models are trained on vast amounts of text data to learn patterns and understand context. They can perform a wide range of tasks, from writing text to answering questions, translating between languages, and even creating creative content. LLMs are used in various applications, including language translation, customer service, content creation, and more.
+Assistant: A large language model (LLM) is a type of artificial intelligence model that can understand and generate human language.
+These models are trained on vast amounts of text data to learn patterns and understand context. They can perform a wide range of tasks,
+from writing text to answering questions, translating between languages,and even creating creative content. LLMs are used in various applications,
+including language translation, customer service, content creation, and more.
 ```
 
 2. 性能测试结果
