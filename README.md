@@ -35,7 +35,7 @@
 1. 加载官方权重并导出到.pth文件
 ```bash
 cd src
-python load.py --model_name Qwen/Qwen3-0.6B --output_file ../qwen3_0.6B_weights.pth
+python load.py --model_name Qwen/Qwen3-0.6B --output_file ../qwen3_0.6b_weights.pth
 ```
 
 2. 运行交互式聊天机器人
