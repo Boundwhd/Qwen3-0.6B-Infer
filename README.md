@@ -32,26 +32,28 @@
 
 ## 🚀 快速开始
 
+当前适配了以下模型在单卡部署场景下的运行：Qwen3-0.6B、Qwen3-1.7B 和 Qwen3-4B。
+
 1. 加载官方权重并导出到.pth文件
 ```bash
 cd src
-python load.py --model_name Qwen/Qwen3-0.6B --output_file ../qwen3_0.6b_weights.pth
+python load.py --model_name Qwen/Qwen3-1.7B --output_file ../weight/Qwen3-1.7B_weights.pth
 ```
 
 2. 运行交互式聊天机器人
 ```bash
-python script_api.py --max_length 512 --device "cpu" 
+python script_api.py --max_length 512 --model_name Qwen/Qwen3-1.7B --checkpoint ../weight/Qwen3-1.7B_weights.pth --device cuda
 ```
 
 3. 运行性能测试脚本
 ```bash
-python script_test.py --prompt_len 128 --output_len 128 --device "cpu"
+python script_test.py --prompt_len 128 --output_len 128 --model_name Qwen/Qwen3-1.7B --checkpoint ../weight/Qwen3-1.7B_weights.pth --device cuda
 ```
 
 ## 🖥️效果展示
 1. 交互对话演示
 ```bash
-Bound@MacBook-Pro src % python script_api.py --max_length 512 --device "cpu"
+Bound@MacBook-Pro src % python script_api.py --model_name Qwen/Qwen3-0.6B --checkpoint ../weight/Qwen3-0.6B_weights.pth --max_length 512 --device "cpu"
 Start loading model weight......
 Loading weights: 100%|█████████████████████████████████████████████████████████████████████████████████████| 311/311 [00:00<00:00]
 ✅ Model loaded successfully.
@@ -72,27 +74,27 @@ including language translation, customer service, content creation, and more.
 
 2. 性能测试结果
 ```bash
-Bound@MacBook-Pro src % python script_test.py -o 32 -p 32 -w 1 -t 2 -d "cpu"
+➜  src git:(main) ✗ python script_test.py --prompt_len 128 --output_len 128 --model_name Qwen/Qwen3-1.7B --checkpoint ../weight/Qwen3-1.7B_weights.pth       
 Start loading model weight......
-Loading weights: 100%|█████████████████████████████████████████████████████████████████████████████████████| 311/311 [00:00<00:00]
+Loading weights: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 311/311 [00:00<00:00]
 ✅ Model loaded successfully.
+Model is loaded on cpu.
 Device: cpu
 Data Type: torch.bfloat16
-Input Length: 32 tokens
-Output Length: 32 tokens
-Number of Tests: 2
+Input Length: 128 tokens
+Output Length: 128 tokens
+Number of Tests: 1
 Warmup Rounds: 1
-Complete test 1/2
-Complete test 2/2
+Complete test 1/1
 
 ================================================================================
-                         Model Performance Test Results
+                         Model Performance Test Results                         
 ================================================================================
 Device:                       cpu
-Average Prefill Time:         368.21 ms
+Average Prefill Time:         2876.54 ms
 --------------------------------------------------------------------------------
-Total Average Decode Time:    1113.65 ms
-Average Decode Time per Token:34.80 ms
-Decode Throughput:            28.73 tokens/s
+Total Average Decode Time:    11465.52 ms
+Average Decode Time per Token:89.57 ms
+Decode Throughput:            11.16 tokens/s
 --------------------------------------------------------------------------------
 ```

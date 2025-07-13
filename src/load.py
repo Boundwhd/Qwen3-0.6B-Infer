@@ -8,7 +8,7 @@ Version: 1.0
 import torch
 from tqdm import tqdm
 from pathlib import Path
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoConfig
 
 from config import Qwen3Config
 from model import Qwen3ForCausalLM
@@ -17,7 +17,7 @@ def check_device_availability(device: torch.device):
     if device == "cuda":
         return torch.cuda.is_available()
     elif device == "mps":
-        return torch.backends.mps.is_available() # MPS backend availability check
+        return torch.backends.mps.is_available()
     return True
 
 def weight_load(
@@ -64,7 +64,20 @@ def model_load(
         device = torch.device("cpu")
     
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    config = Qwen3Config()
+
+    pretrained_config = AutoConfig.from_pretrained(model_name)
+    config = Qwen3Config(
+        vocab_size=pretrained_config.vocab_size,
+        hidden_size=pretrained_config.hidden_size,
+        intermediate_size=pretrained_config.intermediate_size,
+        head_dim=pretrained_config.head_dim,
+        num_hidden_layers=pretrained_config.num_hidden_layers,
+        num_attention_heads=pretrained_config.num_attention_heads,
+        num_key_value_heads=pretrained_config.num_key_value_heads,
+        rms_norm_eps=pretrained_config.rms_norm_eps,
+        rope_theta=pretrained_config.rope_theta,
+        eos_token_id=pretrained_config.eos_token_id
+    )
     model = Qwen3ForCausalLM(config=config).to(device=device, dtype=config.torch_type)
     print("Start loading model weight......")
     model = weight_load(model=model, checkpoint_path=checkpoint, device=device)
@@ -80,9 +93,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Export Qwen3 model weights to .pth file")
     parser.add_argument("--model_name", type=str, default="Qwen/Qwen3-0.6B",
-                       help="HuggingFace model name or path (default: Qwen/Qwen3-0.6B)")
-    parser.add_argument("--output_file", type=str, default="qwen3_0.6b_weights.pth",
-                       help="Output .pth file path (default: qwen3_0.6b_weights.pth)")
+        help="HuggingFace model name or path (default: Qwen/Qwen3-0.6B)")
+    parser.add_argument("--output_file", type=str, default="../weight/Qwen3-0.6B_weights.pth",
+        help="Output .pth file path (default: Qwen3-0.6B_weights.pth)")
     args = parser.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)

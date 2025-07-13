@@ -101,12 +101,8 @@ class KVCache:
     def __init__(self, config: Qwen3Config):
         self.head_dim = config.head_dim
         self.max_seq_len = config.max_position_embeddings
-        self.key_cache = torch.zeros(
-            (1, config.num_key_value_heads, self.max_seq_len, self.head_dim), 
-                dtype=config.torch_type)
-        self.value_cache = torch.zeros(
-            (1, config.num_key_value_heads, self.max_seq_len, self.head_dim), 
-                dtype=config.torch_type)
+        self.key_cache = torch.zeros((1, config.num_key_value_heads, self.max_seq_len, self.head_dim), dtype=config.torch_type)
+        self.value_cache = torch.zeros((1, config.num_key_value_heads, self.max_seq_len, self.head_dim), dtype=config.torch_type)
         self.to_device = False
     
     def update_kv_states(
@@ -134,7 +130,7 @@ class KVCache:
     def get_kv_states(
         self,
         cache_position: int
-    ) -> Tuple[torch.Tensor, torch.tensor]:
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
         if cache_position > self.max_seq_len:
             raise ValueError("Current token exceeds maximum sequence length")
 

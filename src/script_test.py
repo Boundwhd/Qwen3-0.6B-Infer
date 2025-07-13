@@ -83,11 +83,11 @@ def print_results(results):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Model Performance Benchmarking Script (Fixed Output Length)")
-    parser.add_argument("-p", "--prompt_len", type=int, default=128, help="Input prompt length in tokens")
+    parser.add_argument("-p", "--prompt_len", type=int, default=256, help="Input prompt length in tokens")
     parser.add_argument("-o", "--output_len", type=int, default=256, help="Number of output tokens to generate")
     parser.add_argument("-w", "--warmup", type=int, default=1, help="Number of warmup runs")
-    parser.add_argument("-t", "--num_tests", type=int, default=2, help="Number of benchmark test runs")
-    parser.add_argument("-c", "--checkpoint", type=str, default="../qwen3_0.6b_weights.pth", help="Model checkpoint path")
+    parser.add_argument("-t", "--num_tests", type=int, default=1, help="Number of benchmark test runs")
+    parser.add_argument("-c", "--checkpoint", type=str, default="../weigth/qwen3_0.6B_weights.pth", help="Model checkpoint path")
     parser.add_argument("-d", "--device", type=torch.device, default="cpu", help="Running model on which device")
     parser.add_argument("-n", "--model_name", type=str, default="Qwen/Qwen3-0.6B", help="Which official model to use")
     return parser.parse_args()
